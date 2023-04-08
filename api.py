@@ -18,4 +18,4 @@ response = requests.request("GET", url, headers=headers, data = payload)
 resp = json.loads(response.content)
 new_price = resp['result']
 
-print(new_price)
+print(round(new_price, 2))
