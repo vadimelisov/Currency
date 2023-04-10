@@ -1,6 +1,6 @@
 import requests
 import json
-from  config import exchanges
+from config import exchanges
 
 class APIException(Exception):
     pass
@@ -24,7 +24,19 @@ class Converter:
         except ValueError:
             raise APIException(f'Не удалось обработать количество {amount}!')
 
-        r = requests.get(f"https://api.apilayer.com/exchangerates_data/convert?to={sym_key}&from={base_key}")
-        resp = json.loads(r.content)
-        new_price = resp['rates'][sym_key] * float(amount)
-        return round(new_price, 2)
+
+        API_KEY = 'ePVMJVY9kMjos0FVajjBOBtaCuEar9BR'
+
+        url = f"https://api.apilayer.com/exchangerates_data/convert?to={sym_key}&from={base_key}&amount={amount}"
+
+        payload = {}
+        headers = {
+            "apikey": API_KEY
+        }
+
+        response = requests.request("GET", url, headers=headers, data=payload)
+
+        resp = json.loads(response.content)
+        new_price = resp['result']
+
+        print(round(new_price, 2))
