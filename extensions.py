@@ -39,4 +39,4 @@ class Converter:
         resp = json.loads(response.content)
         new_price = resp['result']
 
-        print(round(new_price, 2))
+        return round(new_price, 2)
